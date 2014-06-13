@@ -1,16 +1,18 @@
 
 ## simulate a simple scenario
 function sim_simple()
-
+println("sim_simple() ok")
 sn = linspace(1e-6,1,10);   # types of prosociality
-rp = 1; # number of repeats
+println("linspace ok")
+rp = 20; # number of repeats
 CPUE = Array(Float64,length(sn),rp);
+println("CPUE array ok")
 Tau  = Array(Float64,length(sn),rp);
-
+println("Tau array ok") 
 for i = 1:length(sn)
+    println("iterating thru sn ok")
 	for j = 1:rp
-	     # 	print("rp #: ")
-		println(rp)
+	      	println("timesteps ok")
 		## modulate social network
 		SN = ones(PC_n,PC_n) .* sn[i];
 		for k = 1:PC_n; SN[k,k] = 1; end;

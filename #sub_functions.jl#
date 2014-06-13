@@ -30,21 +30,20 @@ end
 #! D the Euclidean distances, MI which is a indicator for search steam switch (???)
 function fnc_distance(FF,CC,MI)
     ## x,y, distances
-   Dx = FF[:,1]' .- CC[:,1];
-    Dy = FF[:,2]' .- CC[:,2];
+@devec    Dx = FF[:,1]' .- CC[:,1];
+@devec    Dy = FF[:,2]' .- CC[:,2];
 
     ## periodic boundaries
-          GRD_mx_half = GRD_mx/2
-    i = (abs(Dx).>(GRD_mx_half)) + (abs(Dy).>(GRD_mx_half));
-    Dx[i.>1] = -sign(Dx[i.>1]).*(GRD_mx .- abs(Dx[i.>1]));
-    Dy[i.>1] = -sign(Dy[i.>1]).*(GRD_mx .- abs(Dy[i.>1]));
+@devec    i = (abs(Dx).>(GRD_mx/2)) + (abs(Dy).>(GRD_mx/2));
+@devec    Dx[i.>1] = -sign(Dx[i.>1]).*(GRD_mx .- abs(Dx[i.>1]));
+@devec    Dy[i.>1] = -sign(Dy[i.>1]).*(GRD_mx .- abs(Dy[i.>1]));
 
     ## Distance
 @devec    D = sqrt(Dx.^2 + Dy.^2); #! This line takes 40% of computation
 
         # search/steam switch
 	tempRand = rand(PC_n);
-	MI[tempRand.<=PC_rp] = MI[tempRand.<=PC_rp] - 1;
+@devec	MI[tempRand.<=PC_rp] = MI[tempRand.<=PC_rp] - 1;
 	MI = abs(MI);
 
     return D,Dx,Dy,MI
@@ -62,15 +61,15 @@ end
 function fnc_information(D,Dx,Dy,DXY,MI,CN,id)
     # Who you will get info from
     # get the vector of people with whom you are currently in contact
-    j = find(CN[id,:].==1); #!OPT devectorize this 
+@devec= find(CN[id,:].==1); #!OPT devectorize this 
 
     # get information from friends and yourself
     DDi = 0;
     for k = 1:length(j) #!through friends list
-             d = D[j[k],:]; #!return vector of distances for contact k
-              kk = find(d.<PC_f); # find only those in fish finder view
+        d = D[j[k],:]; #!return vector of distances for contact k
+        kk = find(d.<PC_f); # find only those in fish finder view
                             # find the contacts who see fish
-              DDi = hcat(DDi,kk'); # ???
+        DDi = hcat(DDi,kk'); # ???
     end
     DDi = DDi[2:end];
     DD  = D[id,DDi];
@@ -82,7 +81,7 @@ function fnc_information(D,Dx,Dy,DXY,MI,CN,id)
         JJ = DDi[II][1];
         # calculate unit vector DXY to nearest fish
         DXY = [Dx[id,JJ][1] Dy[id,JJ][1]];
-@devec        DXY = DXY ./ sqrt(DXY[1].^2 + DXY[2].^2);
+        DXY = DXY ./ sqrt(DXY[1].^2 + DXY[2].^2);
 
         if Dmin <= PC_h #if there's a fish within view
             # probabilistic catch; if successful, then catch fish

@@ -1,3 +1,6 @@
+module sub_init
+
+export init_equilibrium()
 ###### PRAMETERS / CONSTANTS for running the model to equilibrium
 function init_equilibrium()
 
