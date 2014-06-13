@@ -1,5 +1,5 @@
 #Push module load path to julia pathenv
-#push!(LOAD_PATH, "C:/Users/theplankt/Desktop/LEVLAB summer14/Julia/Julia/")
+push!(LOAD_PATH, "C:/Users/theplankt/Documents/Github/AgentBasedModel/")
 
 using Types, Constants, Rect
 

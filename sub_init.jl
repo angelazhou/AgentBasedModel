@@ -41,7 +41,7 @@ cs  	 = zeros(Float64,PC_n);
 D   	 = ones(Float64,PC_n);
 
 #! Debugging typechecking:
-cons_s = convert(Array{Int32,1}, cons_s)
+Cons_s = convert(Array{Int32,1}, Cons_s)
 
 cons = Fishers(Cons_xy,Cons_H,Cons_s,MI,Cons_cn,Dmin,DXY,VR,JJ,KK,cs,D);
 
